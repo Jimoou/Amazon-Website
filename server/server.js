@@ -1,10 +1,18 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const app = express()
+dotenv.config();
 
-// Midllewares
+const app = express();
+
+mongoose.connect(process.env.DATABASE)
+  .then(() => console.log("Connected to the database"))
+  .catch(err => console.error(err));
+
+// Middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
