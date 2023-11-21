@@ -10,10 +10,16 @@ dotenv.config();
 
 const app = express();
 
-mongoose
-  .connect(process.env.DATABASE)
-  .then(() => console.log('Connected to the database'))
-  .catch((err) => console.error(err));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE);
+    console.log('Connected to the database');
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+connectDB();
 
 // Middlewares
 app.use(morgan('dev'));
@@ -24,19 +30,29 @@ app.get('/', (req, res) => {
   res.json('Hello amazon clone');
 });
 
-app.post('/', (req, res) => {
-  const user = new User();
-  user.name = req.body.name;
-  user.email = req.body.email;
-  user.password = req.body.password;
+app.post('/', async (req, res) => {
+  try {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    });
 
-  user
-    .save()
-    .then(() => res.json('successfully saved'))
-    .catch((err) => res.json(err));
+    await user.save();
+    res.json('Successfully saved');
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-app
-  .listen()
-  .then(() => console.log('Listening on PORT', 3000))
-  .catch((err) => console.log(err));
+// 서버 시작
+const startServer = async () => {
+  try {
+    await app.listen(3000);
+    console.log('Listening on PORT', 3000);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+startServer();
