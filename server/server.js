@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const User = require('./models/user');
-
 dotenv.config();
 
 const app = express();
@@ -26,24 +24,10 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-  res.json('Hello amazon clone');
-});
+// require apis
+const productRoutes = require('./routes/product');
 
-app.post('/', async (req, res) => {
-  try {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    });
-
-    await user.save();
-    res.json('Successfully saved');
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+app.use('/api', productRoutes);
 
 // 서버 시작
 const startServer = async () => {
