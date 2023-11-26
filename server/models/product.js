@@ -14,6 +14,7 @@ const ProductSchema = new Schema({
   title: String,
   description: String,
   price: Number,
+  photo: String,
   stockQuantity: Number,
   rating: [Number],
 });
