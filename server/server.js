@@ -26,8 +26,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // require apis
 const productRoutes = require('./routes/product');
+const categoryRoutes = require('./routes/category');
+const ownerRoutes = require('./routes/owner');
 
 app.use('/api', productRoutes);
+app.use('/api', categoryRoutes);
+app.use('/api', ownerRoutes);
 
 // 서버 시작
 const startServer = async () => {
