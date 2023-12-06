@@ -10,7 +10,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '/css/all.css' },
+      { rel: 'stylesheet', href: '/css/font-awesome/css/all.css' },
       { rel: 'stylesheet', href: '/css/default.css' },
     ],
   },
@@ -52,4 +52,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  server: {
+    port: 8000,
+  },
 };

@@ -3,10 +3,12 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:8000' }));
 
 const connectDB = async () => {
   try {

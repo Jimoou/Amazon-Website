@@ -62,5 +62,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  async data({ $axios }) {
+    try {
+      let response = await $axios.$get('http://localhost:3000/api/products');
+      return {
+        products: products,
+      };
+    } catch (err) {}
+  },
+};
 </script>
