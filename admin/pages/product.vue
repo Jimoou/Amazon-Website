@@ -36,6 +36,11 @@
                 <label style="margin-bottom: 0px">Price</label>
                 <input type="text" class="a-input-text" style="width: 100%" v-model="price" />
               </div>
+              <!-- StockQuantity input -->
+              <div class="a-spacing-top-medium">
+                <label style="margin-bottom: 0px">Stock Quantity</label>
+                <input type="text" class="a-input-text" style="width: 100%" v-model="stockQuantity" />
+              </div>
               <!-- Description textarea -->
               <div class="a-spacing-top-medium">
                 <label style="margin-bottom: 0px">Description</label>
@@ -62,7 +67,7 @@
               <div class="a-spacing-top-large">
                 <span class="a-button-register">
                   <span class="a-button-inner">
-                    <span class="a-button-text">Add Product</span>
+                    <span class="a-button-text" @click="onAddProduct">Add Product</span>
                   </span>
                 </span>
               </div>
@@ -86,6 +91,7 @@ export default {
       price: 0,
       description: '',
       selectedFile: null,
+      stockQuantity: null,
       fileName: '',
     };
   },
@@ -107,6 +113,24 @@ export default {
     onFileSelected(event) {
       this.selectedFile = event.target.files[0];
       this.fileName = event.target.files[0].name;
+    },
+    async onAddProduct() {
+      try {
+        let data = new FormData();
+        data.append('title', this.title);
+        data.append('price', this.price);
+        data.append('description', this.description);
+        data.append('stockQuantity', this.stockQuantity);
+        data.append('ownerID', this.ownerID);
+        data.append('categoryID', this.categoryID);
+        data.append('photo', this.selectedFile, this.selectedFile.name);
+
+        let result = await this.$axios.$post('http://localhost:3000/api/products', data);
+
+        this.$router.push('/');
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
 };
