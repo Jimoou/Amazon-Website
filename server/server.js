@@ -8,7 +8,6 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:8000' }));
 
 const connectDB = async () => {
   try {
@@ -22,6 +21,7 @@ const connectDB = async () => {
 connectDB();
 
 // Middlewares
+app.use(cors({ origin: 'http://localhost:8000' }));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
